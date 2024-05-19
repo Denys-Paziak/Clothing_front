@@ -1,6 +1,8 @@
 import axios from "axios";
 import * as actions from "../constants/userConstants.js";
 
+const backendUrl = "https://clothing-back.vercel.app";
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: actions.USER_LOGIN_REQUEST });
@@ -112,7 +114,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`${backendUrl}/api/users/${id}`, config);
 
     dispatch({ type: actions.USER_DETAILS_SUCCESS, payload: data.user });
   } catch (error) {
@@ -200,7 +202,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/users/${id}`, config);
+    const { data } = await axios.delete(`${backendUrl}/api/users/${id}`, config);
 
     dispatch({ type: actions.USER_DELETE_SUCCESS, payload: data });
   } catch (error) {
@@ -230,7 +232,7 @@ export const updateUser = (userData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/users/${userData._id}`,
+      `${backendUrl}/api/users/${userData._id}`,
       userData,
       config
     );

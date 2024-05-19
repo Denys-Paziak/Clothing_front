@@ -2,6 +2,9 @@ import * as actions from "../constants/orderConstants";
 import axios from "axios";
 import { logout } from "./userActions";
 
+const backendUrl = "https://clothing-back.vercel.app";
+
+
 export const createOrder = (dataOrder) => async (dispatch, getState) => {
   try {
     dispatch({ type: actions.ORDER_CREATE_REQUEST });
@@ -50,7 +53,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/${id}`, config);
+    const { data } = await axios.get(`${backendUrl}/api/orders/${id}`, config);
 
     dispatch({ type: actions.ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
@@ -85,7 +88,7 @@ export const payOrder =
       };
 
       const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
+        `${backendUrl}/api/orders/${orderId}/pay`,
         paymentResult,
         config
       );
@@ -120,7 +123,7 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
       },
     };
 
-    await axios.put(`/api/orders/${orderId}/deliver`, {}, config);
+    await axios.put(`${backendUrl}/api/orders/${orderId}/deliver`, {}, config);
 
     dispatch({ type: actions.ORDER_DELIVER_SUCCESS });
   } catch (error) {
@@ -153,7 +156,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/myorders`, config);
+    const { data } = await axios.get(`${backendUrl}/api/orders/myorders`, config);
 
     dispatch({ type: actions.ORDER_LIST_MY_SUCCESS, payload: data.orders });
   } catch (error) {
@@ -186,7 +189,7 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/`, config);
+    const { data } = await axios.get(`${backendUrl}/api/orders/`, config);
     dispatch({ type: actions.ORDER_LIST_SUCCESS, payload: data.orders });
   } catch (error) {
     const message =
